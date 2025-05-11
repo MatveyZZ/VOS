@@ -2,6 +2,8 @@
 ; pacman -S mingw-w64-ucrt-x86_64-qemu
 ; qemu-system-x86_64 os.bin
 
+; https://www.youtube.com/watch?v=_JEGCEkAqAM
+
 org 0x7c00          ; Устанавливаем адрес загрузки программы в память (0x7C00)
 
 jmp pre_boot        ; Переход к метке pre_boot для начала выполнения кода
