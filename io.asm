@@ -1,20 +1,21 @@
 ; ============================================================================
 ; Библиотека для ввода/вывода текстовой информации, с помощью прерываний BIOS
 ; ============================================================================
-global cls          ; void cls();
-global out_char     ; void out_char(char bl);
-global out_string   ; void out_string(char* si);
 
-global in_char      ; char in_char() return char ax (al);
-global in_string    ; void in_string(char[]* si);
+global cls          ; Объявление глобальной функции cls, которая очищает экран
+global out_char     ; Объявление глобальной функции out_char, которая выводит один символ
+global out_string   ; Объявление глобальной функции out_string, которая выводит строку
 
-global comapre_strs ; int (const char* first_word[] si, const char* last_word[] bx) return cx (1 - равны, 0 - не равны);
+global in_char      ; Объявление глобальной функции in_char, которая считывает один символ и возвращает его в регистре AX (AL)
+global in_string    ; Объявление глобальной функции in_string, которая считывает строку в указанный буфер
 
-global clear_buffer ; void (const char* buf_address[] si, int buf_size bx);
+global comapre_strs ; Объявление глобальной функции compare_strs, которая сравнивает две строки и возвращает результат в CX (1 - строки равны, 0 - не равны)
 
-global new_line ; void new_line();
+global clear_buffer ; Объявление глобальной функции clear_buffer, которая очищает указанный буфер заданного размера
 
-section .text
+global new_line     ; Объявление глобальной функции new_line, которая выводит символ новой строки
+
+section .text       ; Начало секции кода
 
 new_line:
     push ax              ; Сохраняем текущее значение регистра AX на стеке
