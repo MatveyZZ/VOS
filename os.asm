@@ -180,7 +180,8 @@ Callback_FUCK:
 
 
 %include "io.asm"
-welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
+;welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
+welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "P.S. -I fucked in my mouth doing this OS:(", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
 prompt db "WTF@cd:>", 0
 
 wrong_command_1 db "FuckingCommand: '", 0
