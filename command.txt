@@ -1,0 +1,56 @@
+===========Руководство по залупе===========
+
+-----Для компиляции ахуенной ос-----
+; nasm -f bin os.asm -o os.bin
+; qemu-system-x86_64 os.bin
+
+
+Если опять слетит залупа qemu
+; https://www.youtube.com/watch?v=_JEGCEkAqAM
+
+Вот эта залупа из видео выше
+Команды для копирования:
+1. pacman -S mingw-w64-ucrt-x86_64-qemu
+2. pacman -Ss qemu
+3. qemu-system-x86_64 --version
+4. export PATH=/ucrt64/bin:$PATH
+5.1. nano ~/.bashrc
+5.2. export PATH=/ucrt64/bin:$PATH
+5.3. source ~/.bashrc
+6. qemu-img create -f qcow2 ubuntu_disk.qcow2 20G
+7. qemu-system-x86_64 -hda ubuntu_disk.qcow2 -boot d -cdrom /c/Users/Kompusha/Downloads/ubuntu/ubuntu-24.04.1-desktop-amd64.iso -m 2048
+
+
+Вот эта ебатория делает img из bin
+ren os.bin os.img
+ren os.img os.ico
+
+IBM_WELCOME db 
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                           ==         == ======== ========                     ", 0x0a, 0x0d,
+"                           ==    =    == ======== ========                     ", 0x0a, 0x0d,
+"                           ==   ===   ==    ==    ==                           ", 0x0a, 0x0d,
+"                            ==  ===  ==     ==    ==                           ", 0x0a, 0x0d,
+"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,
+"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,
+"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,
+"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"     (C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP       ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d,
+"                                                                               ", 0x0a, 0x0d, 0
+
+IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                           ==         == ======== ========                     ", 0x0a, 0x0d,"                           ==    =    == ======== ========                     ", 0x0a, 0x0d,"                           ==   ===   ==    ==    ==                           ", 0x0a, 0x0d,"                            ==  ===  ==     ==    ==                           ", 0x0a, 0x0d,"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"     (C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP       ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
+

@@ -1,194 +1,213 @@
-; nasm -f bin os.asm -o os.bin
-; pacman -S mingw-w64-ucrt-x86_64-qemu
-; qemu-system-x86_64 os.bin
+org 0x7c00
 
-; https://www.youtube.com/watch?v=_JEGCEkAqAM
-
-org 0x7c00          ; Устанавливаем адрес загрузки программы в память (0x7C00)
-
-jmp pre_boot        ; Переход к метке pre_boot для начала выполнения кода
+jmp pre_boot
 
 pre_boot:
-    cli             ; Отключаем прерывания (Clear Interrupt Flag)
-    xor ax, ax     ; Обнуляем регистр AX (AX = 0)
-    mov ds, ax     ; Устанавливаем сегмент данных (DS) в 0
-    mov es, ax     ; Устанавливаем сегмент дополнительного (ES) в 0
-    mov ss, ax     ; Устанавливаем сегмент стека (SS) в 0
-    mov sp, 0x7c00 ; Устанавливаем указатель стека (SP) на адрес 0x7C00
+    cli
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
     
-    mov ah, 0x02   ; Устанавливаем функцию чтения сектора (функция 2) в регистр AH
-    mov al, 7      ; Указываем количество секторов для чтения (7 секторов)
-    mov ch, 0x00   ; Устанавливаем номер цилиндра (CH) в 0
-    mov cl, 0x02   ; Устанавливаем номер сектора (CL) в 2
-    mov dh, 0x00   ; Устанавливаем номер головки (DH) в 0
-    mov dl, 0x80   ; Указываем диск для чтения (DL = 0x80, первый жесткий диск)
-    mov bx, 0x7e00 ; Указываем адрес в памяти (BX = 0x7E00) для хранения прочитанных данных
-    int 0x13       ; Вызываем прерывание 0x13 для чтения сектора
-    jc read_error   ; Если произошла ошибка (флаг CF установлен), перейти к метке read_error
+    mov ah, 0x02
+    mov al, 7   ; Количество секторов на чтение
+    mov ch, 0x00
+    mov cl, 0x02
+    mov dh, 0x00
+    mov dl, 0x80
+    mov bx, 0x7e00
+    int 0x13       ; Прерывание чтения сектора
+    jc read_error
+
 
     jmp 0x7e00    ; Переход к загруженному коду
 
 read_error:
-    mov ah, 0x0e   ; Устанавливаем функцию вывода символа в виде текста (функция 0x0E) в регистр AH
-    mov al, 'R'    ; Загружаем символ 'R' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'E'    ; Загружаем символ 'E' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'A'    ; Загружаем символ 'A' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'D'    ; Загружаем символ 'D' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, ' '    ; Загружаем пробел в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения пробела на экране
-    mov al, 'E'    ; Загружаем символ 'E' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'R'    ; Загружаем символ 'R' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'R'    ; Загружаем символ 'R' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'O'    ; Загружаем символ 'O' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, 'R'    ; Загружаем символ 'R' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
-    mov al, '!'    ; Загружаем символ '!' в регистр AL
-    int 0x10       ; Вызываем прерывание 0x10 для отображения символа на экране
+    mov ah, 0x0e
+    mov al, 'R'
+    int 0x10
+    mov al, 'E'
+    int 0x10
+    mov al, 'A'
+    int 0x10
+    mov al, 'D'
+    int 0x10
+    mov al, ' '
+    int 0x10
+    mov al, 'E'
+    int 0x10
+    mov al, 'R'
+    int 0x10
+    mov al, 'R'
+    int 0x10
+    mov al, 'O'
+    int 0x10
+    mov al, 'R'
+    int 0x10
+    mov al, '!'
+    int 0x10
 
-    jmp $           ; Бесконечный цикл (прыжок на текущий адрес), чтобы остановить выполнение
 
-times 510 - ($ - $) db 0  ; Заполняем оставшееся пространство до 510 байт нулями
-dw 0xaa55                   ; Записываем сигнатуру загрузчика (0xAA55) в конце загрузочного сектора
+    jmp $
 
-jmp boot                    ; Переход к метке boot для начала выполнения кода
+times 510 - ($- $$) db 0
+dw 0xaa55
+
+jmp boot
 
 boot:
-    call cls                ; Вызов процедуры очистки экрана (cls)
-    call IBM_WELCOME_WINDOW ; Вызов процедуры отображения окна приветствия IBM
-    call cls                ; Очистка экрана снова
-    mov si, welcome         ; Загружаем адрес строки приветствия в регистр SI
-    call out_string         ; Вызов процедуры для вывода строки, на которую указывает SI
-    jmp input_loop          ; Переход к метке input_loop для обработки ввода пользователя
+    call cls
+    call IBM_WELCOME_WINDOW
+    call cls
+    mov si, welcome
+    call out_string
+    jmp input_loop
 
 IBM_WELCOME_WINDOW:
-    mov si, IBM_WELCOME   ; Загружаем адрес строки приветствия IBM в регистр SI
-    call out_string       ; Вызов процедуры для вывода строки, на которую указывает SI
+    mov si, IBM_WELCOME
+    call out_string
 
-    mov ax, 0x8600        ; Устанавливаем значение 0x8600 в регистр AX (функция для получения информации о системе)
-    mov cx, 30            ; Устанавливаем количество байт (30) в регистр CX
-    int 0x15              ; Вызываем прерывание 0x15 для получения информации о системе
-    ret                   ; Возврат из процедуры IBM_WELCOME_WINDOW
+    mov ax, 0x8600
+    mov cx, 30
+    int 0x15
+    ret
 
 input_loop:
-    mov si, buffer        ; Загружаем адрес буфера ввода в регистр SI
-    mov bx, 255           ; Устанавливаем максимальную длину ввода (255 байт) в регистр BX
-    call clear_buffer     ; Вызов процедуры для очистки буфера
 
-    mov si, prompt        ; Загружаем адрес строки запроса (prompt) в регистр SI
-    call out_string       ; Вызов процедуры для вывода строки запроса
+    mov si, buffer
+    mov bx, 255
+    call clear_buffer
 
-    mov si, buffer        ; Загружаем адрес буфера ввода в регистр SI
-    call in_string        ; Вызов процедуры для ввода строки пользователем
+    mov si, prompt
+    call out_string
 
-    jmp OS_callback       ; Переход к обработчику вызова ОС (OS_callback)
+    mov si, buffer
+    call in_string
 
-    jmp input_loop        ; Бесконечный цикл, возвращаемся к началу input_loop (не будет достигнуто из-за предыдущего перехода)
+    jmp OS_callback
+
+
+    jmp input_loop
+
+
 
 OS_callback:
-    mov si, help_in       ; Загружаем адрес строки "help" в регистр SI
-    mov bx, buffer        ; Загружаем адрес буфера ввода в регистр BX
-    call comapre_strs     ; Вызов процедуры для сравнения строк (проверка на "help")
-    cmp cx, 1             ; Сравниваем результат сравнения (CX) с 1
-    je Callback_HELP       ; Если строки совпадают, переход к метке Callback_HELP
+    mov si, help_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_HELP
 
-    mov si, cls_in        ; Загружаем адрес строки "cls" в регистр SI
-    mov bx, buffer        ; Загружаем адрес буфера ввода в регистр BX
-    call comapre_strs     ; Вызов процедуры для сравнения строк (проверка на "cls")
-    cmp cx, 1             ; Сравниваем результат сравнения (CX) с 1
-    je Callback_CLS       ; Если строки совпадают, переход к метке Callback_CLS
+    mov si, cls_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_CLS
 
-    mov si, info_in       ; Загружаем адрес строки "info" в регистр SI
-    mov bx, buffer        ; Загружаем адрес буфера ввода в регистр BX
-    call comapre_strs     ; Вызов процедуры для сравнения строк (проверка на "info")
-    cmp cx, 1             ; Сравниваем результат сравнения (CX) с 1
-    je Callback_INFO      ; Если строки совпадают, переход к метке Callback_INFO
+    mov si, info_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_INFO
 
-    mov si, reboot_in     ; Загружаем адрес строки "reboot" в регистр SI
-    mov bx, buffer        ; Загружаем адрес буфера ввода в регистр BX
-    call comapre_strs     ; Вызов процедуры для сравнения строк (проверка на "reboot")
-    cmp cx, 1             ; Сравниваем результат сравнения (CX) с 1
-    je Callback_REBOOT    ; Если строки совпадают, переход к метке Callback_REBOOT
+    mov si, reboot_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_REBOOT
 
-    mov si, echo_in       ; Загружаем адрес строки "echo" в регистр SI
-    mov bx, buffer        ; Загружаем адрес буфера ввода в регистр BX
-    call comapre_strs     ; Вызов процедуры для сравнения строк (проверка на "echo")
-    cmp cx, 1             ; Сравниваем результат сравнения (CX) с 1
-    je Callback_ECHO      ; Если строки совпадают, переход к метке Callback_ECHO
+    mov si, echo_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_ECHO
 
-    jne Callback_WRONG     ; Если ни одно из условий не выполнено, переход к метке Callback_WRONG
-    jmp input_loop        ; Переход к началу input_loop для повторного ввода
+    mov si, fuck_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_FUCK
+
+
+    jne Callback_WRONG
+    jmp input_loop
 
 Callback_HELP:
-    mov si, help_out      ; Загружаем адрес строки помощи (help_out) в регистр SI
-    call out_string       ; Вызов процедуры для вывода строки помощи на экран
-    jmp input_loop        ; Переход к началу input_loop для ожидания следующего ввода
-
+    mov si, help_out
+    call out_string
+    jmp input_loop
 Callback_CLS:
-    call cls              ; Вызов процедуры очистки экрана (cls)
-    jmp input_loop        ; Переход к началу input_loop для ожидания следующего ввода
+    call cls
+    jmp input_loop
 
 Callback_WRONG:
-    mov si, wrong_command_1 ; Загружаем адрес первой строки об ошибке (wrong_command_1) в регистр SI
-    call out_string       ; Вызов процедуры для вывода первой строки об ошибке на экран
-    mov si, buffer        ; Загружаем адрес буфера ввода в регистр SI
-    call out_string       ; Вызов процедуры для вывода введенной пользователем строки на экран
-    mov si, wrong_command_2 ; Загружаем адрес второй строки об ошибке (wrong_command_2) в регистр SI
-    call out_string       ; Вызов процедуры для вывода второй строки об ошибке на экран
-    jmp input_loop        ; Переход к началу input_loop для ожидания следующего ввода
+    mov si, wrong_command_1
+    call out_string
+    mov si, buffer
+    call out_string
+    mov si, wrong_command_2
+    call out_string
+    jmp input_loop
 
 Callback_INFO:
-    mov si, info_out      ; Загружаем адрес строки информации (info_out) в регистр SI
-    call out_string       ; Вызов процедуры для вывода строки информации на экран
-    jmp input_loop        ; Переход к началу input_loop для ожидания следующего ввода
+    mov si, info_out
+    call out_string
+    jmp input_loop
 
 Callback_REBOOT:
-    mov ah, 0            ; Устанавливаем значение 0 в регистр AH для перезагрузки системы
-    int 0x19             ; Вызываем прерывание 0x19 для перезагрузки системы
-    jmp $                 ; Бесконечный цикл (прыжок на текущий адрес), чтобы остановить выполнение после перезагрузки
+    mov ah, 0
+    int 0x19
+    jmp $
 
 Callback_ECHO:
-    mov si, echo_out      ; Загружаем адрес строки "Echo: " в регистр SI
-    call out_string       ; Вызов процедуры для вывода строки "Echo: " на экран
-    mov si, buffer        ; Загружаем адрес буфера ввода в регистр SI
-    call in_string        ; Вызов процедуры для ввода строки пользователем
+    mov si, echo_out
+    call out_string
+    mov si, buffer
+    call in_string
 
-    mov si, buffer        ; Загружаем адрес буфера ввода в регистр SI
-    call out_string       ; Вызов процедуры для вывода введенной пользователем строки на экран
+    mov si, buffer
+    call out_string
 
-    call new_line         ; Вызов процедуры для перехода на новую строку
+    call new_line
     
-    jmp input_loop        ; Переход к началу input_loop для ожидания следующего ввода
+    jmp input_loop
 
-%include "io.asm"          ; Включаем файл io.asm, который содержит определения и процедуры для ввода/вывода
+Callback_FUCK:
+    mov si, fuck_out
+    call out_string
+    jmp input_loop
 
-welcome db "Welcome to MyOS!", 0x0a, 0x0d, "Type 'help' to get command list!", 0x0a, 0x0d, 0
-                          ; Определяем строку приветствия с символами новой строки и возврата каретки, завершаем нулем
 
-prompt db "live@cd:>", 0  ; Определяем строку запроса (prompt) с завершающим нулем
+%include "io.asm"
+welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
+prompt db "WTF@cd:>", 0
 
-wrong_command_1 db "Command: '", 0  ; Определяем строку для вывода неверной команды с завершающим нулем
-wrong_command_2 db "' not found. Type 'help' to get all commands", 0x0a, 0x0d, 0
-                          ; Определяем строку для вывода сообщения об ошибке с символами новой строки и возврата каретки, завершаем нулем
+wrong_command_1 db "FuckingCommand: '", 0
+wrong_command_2 db "' not found. Type 'help' to get all fucking commands", 0x0a, 0x0d, 0
+echo_out db "Echo: ", 0
 
-echo_out db "Echo: ", 0   ; Определяем строку "Echo: " с завершающим нулем
 
-help_in db "help", 0          ; Определяем строку "help" с завершающим нулем для команды помощи
-cls_in db "cls", 0            ; Определяем строку "cls" с завершающим нулем для команды очистки экрана
-info_in db "info", 0          ; Определяем строку "info" с завершающим нулем для команды получения информации о системе
-reboot_in db "reboot", 0      ; Определяем строку "reboot" с завершающим нулем для команды перезагрузки
-echo_in db "echo", 0          ; Определяем строку "echo" с завершающим нулем для команды вывода текста
 
-info_out db "OS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        This is operation system in development.", 0x0a, 0x0d, "         Author: MatikRamf.", 0x0a, 0x0d, "          Made in Russia!", 0x0a, 0x0d, 0
-help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, 0
+help_in db "help", 0
+cls_in db "cls", 0
+info_in db "info", 0
+reboot_in db "reboot", 0
+echo_in db "echo", 0
+fuck_in db "fuck", 0
 
-IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"              ======== ========    ======          =======                     ", 0x0a, 0x0d,"              ======== =========   ========       ========                     ", 0x0a, 0x0d,"                ===       ==  ===    =======     =======                       ", 0x0a, 0x0d,"                ===       ======     ========   ========                       ", 0x0a, 0x0d,"                ===       ======     ==  ===== =====  ==                       ", 0x0a, 0x0d,"                ===       ==  ===    ==   =========   ==                       ", 0x0a, 0x0d,"              ======== =========  =====    =======    =====                    ", 0x0a, 0x0d,"              ======== ========   =====       =       =====                    ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d," (C) COPYRIGHT 1981, 1996 IBM CORPARATION - ALL RIGHTS RESERVED                ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
 
-buffer times 255 db 0         ; Определяем буфер размером 255 байт, инициализируем его нулями
+
+info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        It's an operating system under development, fuck, I'm already fucking sick of it..", 0x0a, 0x0d, "         Author: Fucking Matvey.", 0x0a, 0x0d, "          Made in Holy Russia!", 0x0a, 0x0d, 0
+help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
+fuck_out db "Fuck you, Chuvaaaaak!!!!!!!", 0x0a, 0x0d, 0
+
+
+
+
+;IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"              ======== ========    ======          =======                     ", 0x0a, 0x0d,"              ======== =========   ========       ========                     ", 0x0a, 0x0d,"                ===       ==  ===    =======     =======                       ", 0x0a, 0x0d,"                ===       ======     ========   ========                       ", 0x0a, 0x0d,"                ===       ======     ==  ===== =====  ==                       ", 0x0a, 0x0d,"                ===       ==  ===    ==   =========   ==                       ", 0x0a, 0x0d,"              ======== =========  =====    =======    =====                    ", 0x0a, 0x0d,"              ======== ========   =====       =       =====                    ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d," (C) COPYRIGHT 1981, 1996 IBM CORPARATION - ALL RIGHTS RESERVED                ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
+IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                           ==         == ======== ========                     ", 0x0a, 0x0d,"                           ==    =    == ======== ========                     ", 0x0a, 0x0d,"                           ==   ===   ==    ==    ==                           ", 0x0a, 0x0d,"                            ==  ===  ==     ==    ==                           ", 0x0a, 0x0d,"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,"                            == == == ==     ==    =====                        ", 0x0a, 0x0d,"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,"                             ===   ===      ==    ==                           ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"     (C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP       ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
+
+
+
+buffer times 255 db 0
