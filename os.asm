@@ -201,10 +201,11 @@ fuck_in db "fuck", 0
 
 
 
-info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        It's an operating system under development, fuck, I'm already fucking sick of it..", 0x0a, 0x0d, "         Author: Fucking Matvey.", 0x0a, 0x0d, "          Made in Holy Russia!", 0x0a, 0x0d, 0
-help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
+; info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        It's an operating system under development, fuck, I'm already fucking sick of it..", 0x0a, 0x0d, "         Author: Fucking Matvey.", 0x0a, 0x0d, "          Made in Holy Russia!", 0x0a, 0x0d, 0
+; help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
+info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,"It's an operating system under development, fuck, I'm already fucking sick of it", 0x0a, 0x0d,"Author: Fucking Matvey.", 0x0a, 0x0d,"Made in Holy Russia!", 0x0a, 0x0d, 0
+help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, 0
 fuck_out db "Fuck you, Chuvaaaaak!!!!!!!", 0x0a, 0x0d, 0
-
 
 
 
