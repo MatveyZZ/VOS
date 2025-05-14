@@ -11,17 +11,17 @@ pre_boot:
     mov sp, 0x7c00
     
     mov ah, 0x02
-    mov al, 7   ; Количество секторов на чтение
+    mov al, 7   ; я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜тво секя┐╜ров я┐╜я┐╜ я┐╜теня┐╜я┐╜
     mov ch, 0x00
     mov cl, 0x02
     mov dh, 0x00
     mov dl, 0x80
     mov bx, 0x7e00
-    int 0x13       ; Прерывание чтения сектора
+    int 0x13       ; я┐╜я┐╜я┐╜ывая┐╜я┐╜я┐╜ я┐╜теня┐╜я┐╜ секя┐╜я┐╜
     jc read_error
 
 
-    jmp 0x7e00    ; Переход к загруженному коду
+    jmp 0x7e00    ; я┐╜я┐╜я┐╜ход я┐╜ я┐╜я┐╜я┐╜я┐╜ужея┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
 
 
 read_error:
@@ -178,7 +178,7 @@ Callback_FUCK:
     call out_string
     jmp input_loop
 
-color_red db 0x0C  ; Цвет текста (0x0C - красный)
+color_red db 0x0C  ; я┐╜я┐╜я┐╜я┐╜ текя┐╜я┐╜ (0x0C - я┐╜я┐╜я┐╜я┐╜)
 
 
 %include "io.asm"
@@ -206,7 +206,7 @@ fuck_in db "fuck", 0
 ; help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
 info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,"It's an operating system under development, fuck, I'm already fucking sick of it", 0x0a, 0x0d,"Author: Fucking Matvey.", 0x0a, 0x0d,"Made in Holy Russia!", 0x0a, 0x0d, 0
 help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, 0
-fuck_out db "Fuck you, Chuvaaaaak!!!!!!!", 0x0a, 0x0d, 0
+fuck_out db "Fuck you, Chuvaaaaak!!!!!!! ╨У╨╛╨▓╨╜╨╛", 0x0a, 0x0d, 0
 
 
 
