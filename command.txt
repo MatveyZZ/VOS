@@ -75,3 +75,6 @@ help_out db
 "          fuck - Fuck you", 0x0a, 0x0d, 0
 
 help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, 0
+
+32-битная ос
+https://www.youtube.com/watch?v=HtP851GhLzc
