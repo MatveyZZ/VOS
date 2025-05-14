@@ -11,17 +11,18 @@ pre_boot:
     mov sp, 0x7c00
     
     mov ah, 0x02
-    mov al, 7   ; Количество секторов на чтение
+    mov al, 7   ; ������⢮ ᥪ�஢ �� �⥭��
     mov ch, 0x00
     mov cl, 0x02
     mov dh, 0x00
     mov dl, 0x80
     mov bx, 0x7e00
-    int 0x13       ; Прерывание чтения сектора
+    int 0x13       ; ���뢠��� �⥭�� ᥪ��
     jc read_error
 
 
-    jmp 0x7e00    ; Переход к загруженному коду
+    jmp 0x7e00    ; ���室 � ����㦥����� ����
+
 
 read_error:
     mov ah, 0x0e
@@ -52,7 +53,7 @@ read_error:
     jmp $
 
 times 510 - ($- $$) db 0
-dw 0xaa55
+dw 0xAA55
 
 jmp boot
 
@@ -177,7 +178,7 @@ Callback_FUCK:
     call out_string
     jmp input_loop
 
-color_red db 0x0C  ; Цвет текста (0x0C - красный)
+color_red db 0x0C  ; ���� ⥪�� (0x0C - ����)
 
 
 %include "io.asm"

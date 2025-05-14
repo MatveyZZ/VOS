@@ -2,6 +2,7 @@
 
 -----Для компиляции ахуенной ос-----
 ; nasm -f bin os.asm -o os.bin
+nasm -f bin io.asm -o io.bin
 ; qemu-system-x86_64 os.bin
 
 
@@ -78,3 +79,7 @@ help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get sys
 
 32-битная ос
 https://www.youtube.com/watch?v=HtP851GhLzc
+
+Терри
+https://archive.org/details/TerryADavis_TempleOS_Archive
+https://www.youtube.com/@completeterrydavis5626
