@@ -179,7 +179,7 @@ Callback_FUCK:
     jmp input_loop
 
 Callback_GAME:
-    call _start
+    call game_start  
     jmp input_loop
 
 %include "io.asm"

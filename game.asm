@@ -1,18 +1,15 @@
 section .data
-    hello db 'Hello, World!', 0  ; Строка для вывода, нуль-терминированная
+    hello db 'Hello, World!', 0x0D, 0x0A, '$'  ; строка для вывода с символами новой строки и конца строки
 
 section .text
-    global _start                  ; Точка входа
+    global game_start
 
-_start:
-    ; Вывод строки на экран
-    mov eax, 4                    ; Системный вызов для sys_write
-    mov ebx, 1                    ; Дескриптор файла 1 (stdout)
-    mov ecx, hello                ; Указатель на строку
-    mov edx, 13                   ; Длина строки
-    int 0x80                      ; Вызов ядра
+game_start:
+    ; Вывод строки
+    mov ah, 09h                     ; функция DOS для вывода строки
+    lea dx, [hello]                 ; загрузка адреса строки в DX
+    int 21h                         ; вызов DOS
 
     ; Завершение программы
-    mov eax, 1                    ; Системный вызов для sys_exit
-    xor ebx, ebx                  ; Код возврата 0
-    int 0x80                      ; Вызов ядра
+    mov ax, 4C00h                   ; функция DOS для выхода
+    int 21h                         ; вызов DOS
