@@ -1,4 +1,4 @@
-org 0x7c00
+org 0x7C00
 
 jmp pre_boot
 
@@ -184,6 +184,7 @@ Callback_GAME:
 
 %include "io.asm"
 %include "game.asm"
+
 ;welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
 welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "P.S. -I fucked in my mouth doing this OS:(", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
 prompt db "WTF@cd:>", 0

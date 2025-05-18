@@ -1,5 +1,5 @@
 ; ============================================================================
-; Библиотека для ввода/вывода текстовой информации, с помощью прерываний BIOS
+; я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜текя┐╜ я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜/я┐╜ывоя┐╜я┐╜ текя┐╜товя┐╜я┐╜ я┐╜я┐╜я┐╜рмации, я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜ывая┐╜я┐╜я┐╜ BIOS
 ; ============================================================================
 global cls          ; void cls();
 global out_char     ; void out_char(char bl);
@@ -8,7 +8,7 @@ global out_string   ; void out_string(char* si);
 global in_char      ; char in_char() return char ax (al);
 global in_string    ; void in_string(char[]* si);
 
-global comapre_strs ; int (const char* first_word[] si, const char* last_word[] bx) return cx (1 - равны, 0 - не равны);
+global comapre_strs ; int (const char* first_word[] si, const char* last_word[] bx) return cx (1 - равя┐╜я┐╜, 0 - я┐╜я┐╜ равя┐╜я┐╜);
 
 global clear_buffer ; void (const char* buf_address[] si, int buf_size bx);
 
@@ -61,11 +61,11 @@ __out_string_if_zero:
 in_char:
     push bx
     mov ah, 0
-    int 0x16    ; Сохранение символа в регистр al
+    int 0x16    ; я┐╜я┐╜я┐╜раня┐╜я┐╜я┐╜я┐╜ симя┐╜я┐╜я┐╜я┐╜ я┐╜ регя┐╜я┐╜я┐╜я┐╜ al
     mov ah, 0x0e
     mov bh, 0
     mov bl, 0x07
-    int 0x10    ; Вывод введённого символа на экран
+    int 0x10    ; я┐╜ывоя┐╜ я┐╜я┐╜я┐╜я┐╜ённоя┐╜я┐╜ симя┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜ я┐╜я┐╜ран
     pop bx
     ret
 
@@ -98,8 +98,8 @@ __comapre_strs_not_equal:
 
 
 clear_buffer:
-    ; si - Адрес буфера
-    ; bx - Колчисевто байт на очистку
+    ; si - я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜
+    ; bx - я┐╜я┐╜я┐╜я┐╜севя┐╜ я┐╜я┐╜я┐╜я┐╜ я┐╜я┐╜ я┐╜я┐╜я┐╜я┐╜я┐╜
     push cx
     mov cx, 0
 __clear_buffer_loop:
@@ -154,11 +154,11 @@ __input_string_enter:
 __input_string_backspace:
     cmp cx, 0
     je __input_string_loop
-    ; 0x20                  ; Пробел
+    ; 0x20                  ; я┐╜робя┐╜я┐╜
     mov ah, 0x0e
     mov al, 0x08            ; Backspace
     int 0x10
-    mov al, 0x20            ; Пробел
+    mov al, 0x20            ; я┐╜робя┐╜я┐╜
     int 0x10
     mov al, 0x08
     int 0x10
