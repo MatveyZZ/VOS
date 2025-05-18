@@ -85,3 +85,5 @@ https://archive.org/details/TerryADavis_TempleOS_Archive
 https://www.youtube.com/@completeterrydavis5626
 
 https://wiki.osdev.org/Expanded_Main_Page
+
+copy /b os.bin os.img
