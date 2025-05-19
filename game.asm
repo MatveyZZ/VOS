@@ -1,26 +1,29 @@
 global game_start
   
-game_start:              ; start label from where our code starts  
+game_start:              ; метка начала программы
   
-    xor ax,ax           ; set ax register to 0  
-    mov ds,ax           ; set data segment(ds) to 0  
-    mov es,ax           ; set extra segment(es) to 0  
-    mov bx,0x7e00 
+    xor ax, ax           ; обнуляем регистр ax  
+    mov ds, ax           ; устанавливаем сегмент данных (ds) в 0  
+    mov es, ax           ; устанавливаем дополнительный сегмент (es) в 0  
+    mov bx, 0x7e00 
   
-    mov si, hello_world              ; point hello_world to source index  
-    call print_string                      ; call print different color string function  
+    mov si, hello_world              ; указываем hello_world как источник  
+    call print_string                 ; вызываем функцию для вывода строки  
   
-    hello_world db  'Hello World!', 0x0a, 0x0d, 0 
+.loop_forever:              ; Бесконечный цикл, чтобы программа продолжала работать
+    jmp .loop_forever              ; Переход к самому себе для создания бесконечного цикла
+
+hello_world db 'Hello World!', 0x0a, 0x0d, 0 
   
 print_string:  
-    mov ah, 0x0E            ; value to tell interrupt handler that take value from al & print it 
+    mov ah, 0x0E            ; значение для прерывания, чтобы вывести символ из al 
   
 .repeat_next_char:  
-    lodsb                ; get character from string  
-    cmp al, 0                    ; cmp al with end of string  
-    je .done_print               ; if char is zero, end of string  
-    int 0x10                     ; otherwise, print it  
-    jmp .repeat_next_char        ; jmp to .repeat_next_char if not 0  
+    lodsb                   ; получаем символ из строки  
+    cmp al, 0              ; сравниваем al с концом строки  
+    je .done_print         ; если символ нулевой, конец строки  
+    int 0x10              ; иначе, выводим символ  
+    jmp .repeat_next_char  ; переходим к следующему символу  
   
 .done_print:  
-    ret                         ;return  
+    ret                     ; возвращаемся  
