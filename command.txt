@@ -4,6 +4,7 @@
 ; nasm -f bin os.asm -o os.bin
 nasm -f bin io.asm -o io.bin
 ; qemu-system-x86_64 os.bin
+qemu-system-x86_64 -fda os.bin
 
 
 Если опять слетит залупа qemu
@@ -86,4 +87,4 @@ https://www.youtube.com/@completeterrydavis5626
 
 https://wiki.osdev.org/Expanded_Main_Page
 
-copy /b os.bin os.img
+copy /b os.bin + io.bin + color.bin os.img
