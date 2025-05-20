@@ -88,6 +88,7 @@ https://www.youtube.com/@completeterrydavis5626
 https://wiki.osdev.org/Expanded_Main_Page
 
 copy /b os.bin + io.bin + color.bin os.img
+copy /b os.bin os.img
 
 Aries_out db "   .-.   .-.", 0x0a, 0x0d,"  (_  \ /  _)    Aries-  The Ram", 0x0a, 0x0d,"       |", 0x0a, 0x0d,"       |", 0x0a, 0x0d, 0
 Taurus_out db"    .     .", 0x0a, 0x0d,"    '.___.'      Taurus-  The Bull", 0x0a, 0x0d,"    .'   `.", 0x0a, 0x0d,"   :       :", 0x0a, 0x0d,"   :       :", 0x0a, 0x0d,"    `.___.'", 0x0a, 0x0d, 0

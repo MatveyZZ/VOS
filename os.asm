@@ -292,6 +292,12 @@ OS_callback:
     cmp cx, 1
     je Callback_Pisces
 
+    mov si, draw_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_DRAW
+
     jne Callback_WRONG
     jmp input_loop
 
@@ -351,9 +357,20 @@ Callback_ZODIAC:
     call out_string
     jmp input_loop
 
+Callback_DRAW:
+    call cls
+    mov si, draw_out
+    call out_string
+    call kursor
+    call cls
+    call out_string
+    jmp input_loop
+    
+
 %include "io.asm"
 %include "color.asm"
 %include "zodiac.asm"
+%include "draw.asm"
 
 ;welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
 welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "P.S. -I fucked in my mouth doing this OS:(", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
@@ -371,14 +388,16 @@ echo_in db "echo", 0
 fuck_in db "fuck", 0
 background_in db "color", 0
 zodiac_in db "zodiac", 0
+draw_in db "draw", 0
 
 ; info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        It's an operating system under development, fuck, I'm already fucking sick of it..", 0x0a, 0x0d, "         Author: Fucking Matvey.", 0x0a, 0x0d, "          Made in Holy Russia!", 0x0a, 0x0d, 0
 ; help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
 info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,"It's an operating system under development, fuck, I'm already fuck sick of it", 0x0a, 0x0d,"Author: Fucking Matvey.", 0x0a, 0x0d,"Made in Holy Russia!", 0x0a, 0x0d, 0
-help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, "          color - changing the background color", 0x0a, 0x0d,"          zodiac - drawing of the zodiac sign", 0x0a, 0x0d, 0
+help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, "          color - changing the background color", 0x0a, 0x0d,"          zodiac - drawing of the zodiac sign", 0x0a, 0x0d, "          draw - drawing of the paint", 0x0a, 0x0d, 0
 fuck_out db "Fuck you, Chuvaaaaak!!!!!!!", 0x0a, 0x0d, 0
 background_out db "Choose the desired color:", 0x0a, 0x0d, "blue, green, cyan, red, magenta, light-gray, dark-gray, light-blue,", 0x0a, 0x0d, "light-green, light-cyan, light-red, light-magenta, brown, yellow", 0x0a, 0x0d, 0
 zodiac_out db "What is your zodiac sign?", 0x0a, 0x0d,"Aries, Taurus, Gemini, Cancer, Leo, Virgo,", 0x0a, 0x0d,"Libra, Scorpius, Sagittarius, Capricorn, Aquarius, Pisces", 0x0a, 0x0d, 0
+draw_out db "You need to press F1, F2, F3, F4, F5 to change the text", 0x0a, 0x0d, " and ESC to exit the program.", 0x0a, 0x0d, "", 0x0a, 0x0d, 0
 
 ;IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"              ======== ========    ======          =======                     ", 0x0a, 0x0d,"              ======== =========   ========       ========                     ", 0x0a, 0x0d,"                ===       ==  ===    =======     =======                       ", 0x0a, 0x0d,"                ===       ======     ========   ========                       ", 0x0a, 0x0d,"                ===       ======     ==  ===== =====  ==                       ", 0x0a, 0x0d,"                ===       ==  ===    ==   =========   ==                       ", 0x0a, 0x0d,"              ======== =========  =====    =======    =====                    ", 0x0a, 0x0d,"              ======== ========   =====       =       =====                    ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d," (C) COPYRIGHT 1981, 1996 IBM CORPARATION - ALL RIGHTS RESERVED                ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
 IBM_WELCOME db "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d,"@1             1             1             1             1             1      @", 0x0a, 0x0d,"@ 2           2 2           2 2           2 2           2 2           2 2     @", 0x0a, 0x0d,"@  3         3   3         3   3         3   3         3   3         3   3    @", 0x0a, 0x0d,"@   4       4     4       4     4       4     4       4     4       4     4   @", 0x0a, 0x0d,"@    5     5       5     5       5     5       5     5       5     5       5  @", 0x0a, 0x0d,"@     6   6         6   6         6   6         6   6         6   6         6 @", 0x0a, 0x0d,"@      7 7           7 7           7 7           7 7           7 7           7@", 0x0a, 0x0d,"@       8             8             8             8             8             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@                       ==         == ======== ========                       @", 0x0a, 0x0d,"@                       ==    =    == ======== ========                       @", 0x0a, 0x0d,"@                       ==   ===   ==    ==    ==                             @", 0x0a, 0x0d,"@                        ==  ===  ==     ==    ==                             @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@-----(C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP-----@", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d, 0
