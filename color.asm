@@ -5,7 +5,9 @@ color_start:
     ; Устанавливаем цвет текста (зеленый)
     mov ah, 0x0B      ; Функция установки цвета текста
     mov bh, 0x00      ; Номер страницы (обычно 0)
-    mov bl, 0x0A      ; Цвет текста (0A - зеленый)
+    ;mov bl, 0x0A      ; Цвет текста (0A - зеленый)
+    mov bl, 0x02      ; Цвет текста (02 - темно-зеленый)
+
     int 0x10          ; Вызов BIOS
 
     ; Выводим строку "Hello World!"
@@ -19,4 +21,4 @@ color_start:
 
 
 section .data
-color_out db "The background color has been changed to green!", 0x0a, 0x0d, 0 
+color_out db "The background color has been changed to dark-green!", 0x0a, 0x0d, 0 
