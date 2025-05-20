@@ -1,5 +1,3 @@
-global zodiac
-
 section .text
 Aries:
     mov si, Aries_out

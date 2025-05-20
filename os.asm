@@ -11,7 +11,7 @@ pre_boot:
     mov sp, 0x7c00
     
     mov ah, 0x02
-    mov al, 10   ; ������⢮ ᥪ�஢ �� �⥭��
+    mov al, 14   ; ������⢮ ᥪ�஢ �� �⥭��
     mov ch, 0x00
     mov cl, 0x02
     mov dh, 0x00
@@ -129,6 +129,90 @@ OS_callback:
     call comapre_strs
     cmp cx, 1
     je Callback_BACKGROUND
+
+    mov si, color_Blue_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Blue
+
+    mov si, color_Green_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Green
+
+    mov si, color_Cyan_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Cyan
+
+    mov si, color_Red_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Red
+
+    mov si, color_Magenta_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Magenta
+
+    mov si, color_Light_Gray_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Gray
+
+    mov si, color_Dark_Gray_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Dark_Gray
+
+    mov si, color_Light_Blue_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Blue
+
+    mov si, color_Light_Green_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Green
+
+    mov si, color_Light_Cyan_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Cyan
+
+    mov si, color_Light_Red_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Red
+
+    mov si, color_Light_Magenta_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Magenta
+
+    mov si, color_Brown_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Brown
+
+    mov si, color_Yellow_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Yellow
 
     mov si, zodiac_in
     mov bx, buffer
@@ -258,7 +342,7 @@ Callback_FUCK:
     jmp input_loop
 
 Callback_BACKGROUND:
-    call color_start
+    mov si, background_out
     call out_string       
     jmp input_loop   
 
@@ -293,8 +377,8 @@ zodiac_in db "zodiac", 0
 info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,"It's an operating system under development, fuck, I'm already fuck sick of it", 0x0a, 0x0d,"Author: Fucking Matvey.", 0x0a, 0x0d,"Made in Holy Russia!", 0x0a, 0x0d, 0
 help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, "          color - changing the background color", 0x0a, 0x0d,"          zodiac - drawing of the zodiac sign", 0x0a, 0x0d, 0
 fuck_out db "Fuck you, Chuvaaaaak!!!!!!!", 0x0a, 0x0d, 0
+background_out db "Choose the desired color:", 0x0a, 0x0d, "blue, green, cyan, red, magenta, light-gray, dark-gray, light-blue,", 0x0a, 0x0d, "light-green, light-cyan, light-red, light-magenta, brown, yellow", 0x0a, 0x0d, 0
 zodiac_out db "What is your zodiac sign?", 0x0a, 0x0d,"Aries, Taurus, Gemini, Cancer, Leo, Virgo,", 0x0a, 0x0d,"Libra, Scorpius, Sagittarius, Capricorn, Aquarius, Pisces", 0x0a, 0x0d, 0
-
 
 ;IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"              ======== ========    ======          =======                     ", 0x0a, 0x0d,"              ======== =========   ========       ========                     ", 0x0a, 0x0d,"                ===       ==  ===    =======     =======                       ", 0x0a, 0x0d,"                ===       ======     ========   ========                       ", 0x0a, 0x0d,"                ===       ======     ==  ===== =====  ==                       ", 0x0a, 0x0d,"                ===       ==  ===    ==   =========   ==                       ", 0x0a, 0x0d,"              ======== =========  =====    =======    =====                    ", 0x0a, 0x0d,"              ======== ========   =====       =       =====                    ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d," (C) COPYRIGHT 1981, 1996 IBM CORPARATION - ALL RIGHTS RESERVED                ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
 IBM_WELCOME db "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d,"@1             1             1             1             1             1      @", 0x0a, 0x0d,"@ 2           2 2           2 2           2 2           2 2           2 2     @", 0x0a, 0x0d,"@  3         3   3         3   3         3   3         3   3         3   3    @", 0x0a, 0x0d,"@   4       4     4       4     4       4     4       4     4       4     4   @", 0x0a, 0x0d,"@    5     5       5     5       5     5       5     5       5     5       5  @", 0x0a, 0x0d,"@     6   6         6   6         6   6         6   6         6   6         6 @", 0x0a, 0x0d,"@      7 7           7 7           7 7           7 7           7 7           7@", 0x0a, 0x0d,"@       8             8             8             8             8             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@                       ==         == ======== ========                       @", 0x0a, 0x0d,"@                       ==    =    == ======== ========                       @", 0x0a, 0x0d,"@                       ==   ===   ==    ==    ==                             @", 0x0a, 0x0d,"@                        ==  ===  ==     ==    ==                             @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@-----(C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP-----@", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d, 0
