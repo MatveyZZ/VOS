@@ -104,3 +104,6 @@ Pisces_out db "     `-.    .-'   Pisces-  The Fishes", 0x0a, 0x0d,"        :  :"
 
 zodiac_out db "What is your zodiac sign?", 0x0a, 0x0d,"Aries, Taurus, Gemini, Cancer, Leo, Virgo,", 0x0a, 0x0d,"Libra, Scorpius, Sagittarius, Capricorn, Aquarius, Pisces", 0x0a, 0x0d, 0
 
+
+https://ascii.co.uk/art
+Рисунки ASCII
