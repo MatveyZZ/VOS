@@ -298,6 +298,13 @@ OS_callback:
     cmp cx, 1
     je Callback_DRAW
 
+    mov si, text_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_TEXT
+
+
     jne Callback_WRONG
     jmp input_loop
 
@@ -366,7 +373,6 @@ Callback_DRAW:
     call out_string
     jmp input_loop
     
-
 %include "io.asm"
 %include "color.asm"
 %include "zodiac.asm"
