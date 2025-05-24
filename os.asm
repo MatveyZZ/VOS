@@ -220,89 +220,13 @@ OS_callback:
     cmp cx, 1
     je Callback_ZODIAC
 
-    mov si, Aries_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Aries
-
-    mov si, Taurus_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Taurus
-
-    mov si, Gemini_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Gemini
-
-    mov si, Cancer_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Cancer
-
-    mov si, Leo_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Leo
-
-    mov si, Virgo_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Virgo
-
-    mov si, Libra_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Libra
-
-    mov si, Scorpius_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Scorpius
-
-    mov si, Sagittarius_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Sagittarius
-
-    mov si, Capricorn_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Capricorn
-
-    mov si, Aquarius_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Aquarius
-
-    mov si, Pisces_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_Pisces
+    call ZODIAC_CALLBACK_OS
 
     mov si, draw_in
     mov bx, buffer
     call comapre_strs
     cmp cx, 1
     je Callback_DRAW
-
-    mov si, text_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_TEXT
 
 
     jne Callback_WRONG

@@ -43,7 +43,7 @@ Gemini_out db "    ._____.", 0x0a, 0x0d,"      | |        Gemini-  The Twins", 0
 Cancer_out db "      .--.", 0x0a, 0x0d,"     /   _`.     Cancer-  The Crab", 0x0a, 0x0d,"    (_) ( )", 0x0a, 0x0d,"   '.    /", 0x0a, 0x0d,"     `--'", 0x0a, 0x0d, 0
 Leo_out db"      .--.", 0x0a, 0x0d,"     (    )       Leo-  The Lion", 0x0a, 0x0d,"    (_)  /", 0x0a, 0x0d,"        (_,", 0x0a, 0x0d, 0
 Virgo_out db "   _", 0x0a, 0x0d,"  ' `:--.--.", 0x0a, 0x0d,"     |  |  |_     Virgo-  The Virgin", 0x0a, 0x0d,"     |  |  | )", 0x0a, 0x0d,"     |  |  |/", 0x0a, 0x0d,"          (J", 0x0a, 0x0d, 0
-Libra_out db "        __", 0x0a, 0x0d,"   ___.'  '.___   Libra-  The Balance", 0x0a, 0x0d,"   ____________", 0x0a, 0x0d, 0
+Libra_out db "        __", 0x0a, 0x0d, "   ___.'  '.___   Libra-  The Balance", 0x0a, 0x0d,"   ____________", 0x0a, 0x0d, 0
 Scorpius_out db "   _", 0x0a, 0x0d,"  ' `:--.--.", 0x0a, 0x0d,"     |  |  |      Scorpius-  The Scorpion", 0x0a, 0x0d,"     |  |  |", 0x0a, 0x0d,"     |  |  |  ..,", 0x0a, 0x0d,"           `---':", 0x0a, 0x0d, 0
 Sagittarius_out db "          ...", 0x0a, 0x0d,"          .':     Sagittarius-  The Archer", 0x0a, 0x0d,"        .'", 0x0a, 0x0d,"    `..'", 0x0a, 0x0d,"    .'`.", 0x0a, 0x0d, 0
 Capricorn_out db "            _", 0x0a, 0x0d,"    \      /_)    Capricorn-  The Goat", 0x0a, 0x0d,"     \    /`.", 0x0a, 0x0d,"      \  /   ;", 0x0a, 0x0d,"       \/ __.'", 0x0a, 0x0d, 0
@@ -111,3 +111,76 @@ Callback_Pisces:
     call Pisces
     call out_string
     jmp input_loop
+
+ZODIAC_CALLBACK_OS:
+    mov si, Aries_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Aries
+
+    mov si, Taurus_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Taurus
+
+    mov si, Gemini_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Gemini
+
+    mov si, Cancer_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Cancer
+
+    mov si, Leo_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Leo
+
+    mov si, Virgo_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Virgo
+
+    mov si, Libra_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Libra
+
+    mov si, Scorpius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Scorpius
+
+    mov si, Sagittarius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Sagittarius
+
+    mov si, Capricorn_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Capricorn
+
+    mov si, Aquarius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Aquarius
+
+    mov si, Pisces_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Pisces
