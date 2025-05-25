@@ -3,6 +3,9 @@
 -----Для компиляции ахуенной ос-----
 ; nasm -f bin os.asm -o os.bin
 nasm -f bin io.asm -o io.bin
+nasm -f bin draw.asm -o draw.bin
+nasm -f bin zodiac.asm -o zodiac.bin
+
 ; qemu-system-x86_64 os.bin
 qemu-system-x86_64 -fda os.bin
 
