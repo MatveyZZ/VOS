@@ -11,7 +11,7 @@ pre_boot:
     mov sp, 0x7c00
     
     mov ah, 0x02
-    mov al, 14   ; ������⢮ ᥪ�஢ �� �⥭��
+    mov al, 16   ; ������⢮ ᥪ�஢ �� �⥭��
     mov ch, 0x00
     mov cl, 0x02
     mov dh, 0x00
@@ -49,7 +49,18 @@ read_error:
 
     jmp $
 
+; Установка таймера на 2 секунды
+set_timer:
+    mov al, 0x36          ; Установить режим 3 (прямой доступ)
+    out 0x43, al          ; Установить регистр управления таймером
+    mov ax, 0x0000        ; Значение делителя (66100)
+    out 0x40, al          ; Младший байт
+    mov al, ah            ; Старший байт
+    out 0x40, al          ; Старший байт
+    ret
+
 times 510 - ($- $$) db 0
+;times 510 db 0
 dw 0xAA55
 
 jmp boot
@@ -72,9 +83,11 @@ IBM_WELCOME_WINDOW:
     ret
 
 input_loop:
+    call set_timer
 
     mov si, buffer
-    mov bx, 255
+    ;mov bx, 255
+    mov bx, 1024
     call clear_buffer
 
     mov si, prompt
@@ -83,9 +96,13 @@ input_loop:
     mov si, buffer
     call in_string
 
+    ; Проверка на пустой ввод
+    cmp byte [buffer], 0
+    je input_loop
+
     jmp OS_callback
 
-    jmp input_loop
+    ;jmp input_loop
 
 OS_callback:
     mov si, help_in
@@ -130,89 +147,7 @@ OS_callback:
     cmp cx, 1
     je Callback_BACKGROUND
 
-    mov si, color_Blue_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Blue
-
-    mov si, color_Green_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Green
-
-    mov si, color_Cyan_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Cyan
-
-    mov si, color_Red_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Red
-
-    mov si, color_Magenta_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Magenta
-
-    mov si, color_Light_Gray_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Gray
-
-    mov si, color_Dark_Gray_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Dark_Gray
-
-    mov si, color_Light_Blue_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Blue
-
-    mov si, color_Light_Green_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Green
-
-    mov si, color_Light_Cyan_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Cyan
-
-    mov si, color_Light_Red_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Red
-
-    mov si, color_Light_Magenta_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Magenta
-
-    mov si, color_Brown_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Brown
-
-    mov si, color_Yellow_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Yellow
+    call DRAW_CALLBACK_OC
 
     mov si, zodiac_in
     mov bx, buffer
@@ -332,4 +267,5 @@ draw_out db "You need to press F1, F2, F3, F4, F5 to change the text", 0x0a, 0x0
 ;IBM_WELCOME db "                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"              ======== ========    ======          =======                     ", 0x0a, 0x0d,"              ======== =========   ========       ========                     ", 0x0a, 0x0d,"                ===       ==  ===    =======     =======                       ", 0x0a, 0x0d,"                ===       ======     ========   ========                       ", 0x0a, 0x0d,"                ===       ======     ==  ===== =====  ==                       ", 0x0a, 0x0d,"                ===       ==  ===    ==   =========   ==                       ", 0x0a, 0x0d,"              ======== =========  =====    =======    =====                    ", 0x0a, 0x0d,"              ======== ========   =====       =       =====                    ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d," (C) COPYRIGHT 1981, 1996 IBM CORPARATION - ALL RIGHTS RESERVED                ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d,"                                                                               ", 0x0a, 0x0d, 0
 IBM_WELCOME db "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d,"@1             1             1             1             1             1      @", 0x0a, 0x0d,"@ 2           2 2           2 2           2 2           2 2           2 2     @", 0x0a, 0x0d,"@  3         3   3         3   3         3   3         3   3         3   3    @", 0x0a, 0x0d,"@   4       4     4       4     4       4     4       4     4       4     4   @", 0x0a, 0x0d,"@    5     5       5     5       5     5       5     5       5     5       5  @", 0x0a, 0x0d,"@     6   6         6   6         6   6         6   6         6   6         6 @", 0x0a, 0x0d,"@      7 7           7 7           7 7           7 7           7 7           7@", 0x0a, 0x0d,"@       8             8             8             8             8             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@                       ==         == ======== ========                       @", 0x0a, 0x0d,"@                       ==    =    == ======== ========                       @", 0x0a, 0x0d,"@                       ==   ===   ==    ==    ==                             @", 0x0a, 0x0d,"@                        ==  ===  ==     ==    ==                             @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@-----(C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP-----@", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d, 0
 
-buffer times 255 db 0
+;buffer times 255 db 0
+buffer times 2048 db 0
