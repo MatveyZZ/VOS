@@ -49,16 +49,6 @@ read_error:
 
     jmp $
 
-; Установка таймера на 2 секунды
-set_timer:
-    mov al, 0x36          ; Установить режим 3 (прямой доступ)
-    out 0x43, al          ; Установить регистр управления таймером
-    mov ax, 0x0000        ; Значение делителя (66100)
-    out 0x40, al          ; Младший байт
-    mov al, ah            ; Старший байт
-    out 0x40, al          ; Старший байт
-    ret
-
 times 510 - ($- $$) db 0
 ;times 510 db 0
 dw 0xAA55
@@ -83,11 +73,9 @@ IBM_WELCOME_WINDOW:
     ret
 
 input_loop:
-    call set_timer
-
     mov si, buffer
     ;mov bx, 255
-    mov bx, 1024
+    mov bx, 4096
     call clear_buffer
 
     mov si, prompt
@@ -102,7 +90,7 @@ input_loop:
 
     jmp OS_callback
 
-    ;jmp input_loop
+    jmp input_loop
 
 OS_callback:
     mov si, help_in
