@@ -9,11 +9,9 @@ nasm -f bin zodiac.asm -o zodiac.bin
 ; qemu-system-x86_64 os.bin
 qemu-system-x86_64 -fda os.bin
 
-
-Если опять слетит залупа qemu
+Если опять слетит qemu
 ; https://www.youtube.com/watch?v=_JEGCEkAqAM
 
-Вот эта залупа из видео выше
 Команды для копирования:
 1. pacman -S mingw-w64-ucrt-x86_64-qemu
 2. pacman -Ss qemu
@@ -25,61 +23,9 @@ qemu-system-x86_64 -fda os.bin
 6. qemu-img create -f qcow2 ubuntu_disk.qcow2 20G
 7. qemu-system-x86_64 -hda ubuntu_disk.qcow2 -boot d -cdrom /c/Users/Kompusha/Downloads/ubuntu/ubuntu-24.04.1-desktop-amd64.iso -m 2048
 
-
 Вот эта ебатория делает img из bin
 ren os.bin os.img
 ren os.img os.ico
-
-IBM_WELCOME db 
-"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d,
-"@1             1             1             1             1             1      @", 0x0a, 0x0d,
-"@ 2           2 2           2 2           2 2           2 2           2 2     @", 0x0a, 0x0d,
-"@  3         3   3         3   3         3   3         3   3         3   3    @", 0x0a, 0x0d,
-"@   4       4     4       4     4       4     4       4     4       4     4   @", 0x0a, 0x0d,
-"@    5     5       5     5       5     5       5     5       5     5       5  @", 0x0a, 0x0d,
-"@     6   6         6   6         6   6         6   6         6   6         6 @", 0x0a, 0x0d,
-"@      7 7           7 7           7 7           7 7           7 7           7@", 0x0a, 0x0d,
-"@       8             8             8             8             8             @", 0x0a, 0x0d,
-"@                                                                             @", 0x0a, 0x0d,
-"@                       ==         == ======== ========                       @", 0x0a, 0x0d,
-"@                       ==    =    == ======== ========                       @", 0x0a, 0x0d,
-"@                       ==   ===   ==    ==    ==                             @", 0x0a, 0x0d,
-"@                        ==  ===  ==     ==    ==                             @", 0x0a, 0x0d,
-"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,
-"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,
-"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,
-"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,
-"@                                                                             @", 0x0a, 0x0d,
-"@_____________________________________________________________________________@", 0x0a, 0x0d,
-"@-----(C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP-----@", 0x0a, 0x0d,
-"@_____________________________________________________________________________@", 0x0a, 0x0d,
-"@                                    8===D                                    @", 0x0a, 0x0d,
-"@                                    8===D                                    @", 0x0a, 0x0d,
-"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d, 0
-
-IBM_WELCOME db "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d,"@1             1             1             1             1             1      @", 0x0a, 0x0d,"@ 2           2 2           2 2           2 2           2 2           2 2     @", 0x0a, 0x0d,"@  3         3   3         3   3         3   3         3   3         3   3    @", 0x0a, 0x0d,"@   4       4     4       4     4       4     4       4     4       4     4   @", 0x0a, 0x0d,"@    5     5       5     5       5     5       5     5       5     5       5  @", 0x0a, 0x0d,"@     6   6         6   6         6   6         6   6         6   6         6 @", 0x0a, 0x0d,"@      7 7           7 7           7 7           7 7           7 7           7@", 0x0a, 0x0d,"@       8             8             8             8             8             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@                       ==         == ======== ========                       @", 0x0a, 0x0d,"@                       ==    =    == ======== ========                       @", 0x0a, 0x0d,"@                       ==   ===   ==    ==    ==                             @", 0x0a, 0x0d,"@                        ==  ===  ==     ==    ==                             @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                        == == == ==     ==    =====                          @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                         ===   ===      ==    ==                             @", 0x0a, 0x0d,"@                                                                             @", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@-----(C) COPYRIGHT 1488, 2025 WTF CORPORATION - ALL RIGHTS ARE FUCKED UP-----@", 0x0a, 0x0d,"@_____________________________________________________________________________@", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@                                    8===D                                    @", 0x0a, 0x0d,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x0a, 0x0d, 0
-
-=====Нужно будет сделать модернизацию этой строки, чтобы тоже был рисунок
-welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "╭∩╮(Ο_Ο)╭∩╮", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
-
-Чисто в теории надо сделать цвет консоли, чтобы выглядело пиздато
-
-info_out db 
-"FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,
-"It's an operating system under development, fuck, I'm already fucking sick of it", 0x0a, 0x0d,
-"Author: Fucking Matvey.", 0x0a, 0x0d,
-"Made in Holy Russia!", 0x0a, 0x0d, 0
-
-info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d,"It's an operating system under development, fuck, I'm already fucking sick of it", 0x0a, 0x0d,"Author: Fucking Matvey.", 0x0a, 0x0d,"Made in Holy Russia!", 0x0a, 0x0d, 0
-
-help_out db 
-"          cls - Clear screen", 0x0a, 0x0d,
-"          info - Get system info", 0x0a, 0x0d,
-"          reboot - Reboot computer", 0x0a, 0x0d,
-"          echo - Write text in screen", 0x0a, 0x0d,
-"          fuck - Fuck you", 0x0a, 0x0d, 0
-
-help_out db "          cls - Clear screen", 0x0a, 0x0d,"          info - Get system info", 0x0a, 0x0d,"          reboot - Reboot computer", 0x0a, 0x0d,"          echo - Write text in screen", 0x0a, 0x0d,"          fuck - Fuck you", 0x0a, 0x0d, 0
 
 32-битная ос
 https://www.youtube.com/watch?v=HtP851GhLzc
@@ -92,22 +38,6 @@ https://wiki.osdev.org/Expanded_Main_Page
 
 copy /b os.bin + io.bin + color.bin os.img
 copy /b os.bin os.img
-
-Aries_out db "   .-.   .-.", 0x0a, 0x0d,"  (_  \ /  _)    Aries-  The Ram", 0x0a, 0x0d,"       |", 0x0a, 0x0d,"       |", 0x0a, 0x0d, 0
-Taurus_out db"    .     .", 0x0a, 0x0d,"    '.___.'      Taurus-  The Bull", 0x0a, 0x0d,"    .'   `.", 0x0a, 0x0d,"   :       :", 0x0a, 0x0d,"   :       :", 0x0a, 0x0d,"    `.___.'", 0x0a, 0x0d, 0
-Gemini_out db "    ._____.", 0x0a, 0x0d,"      | |        Gemini-  The Twins", 0x0a, 0x0d,"      | |", 0x0a, 0x0d,"     _|_|_", 0x0a, 0x0d,"    '     '", 0x0a, 0x0d, 0
-Cancer_out db "      .--.", 0x0a, 0x0d,"     /   _`.     Cancer-  The Crab", 0x0a, 0x0d,"    (_) ( )", 0x0a, 0x0d,"   '.    /", 0x0a, 0x0d,"     `--'", 0x0a, 0x0d, 0
-Leo_out db"      .--.", 0x0a, 0x0d,"     (    )       Leo-  The Lion", 0x0a, 0x0d,"    (_)  /", 0x0a, 0x0d,"        (_,", 0x0a, 0x0d, 0
-Virgo_out db "   _", 0x0a, 0x0d,"  ' `:--.--.", 0x0a, 0x0d,"     |  |  |_     Virgo-  The Virgin", 0x0a, 0x0d,"     |  |  | )", 0x0a, 0x0d,"     |  |  |/", 0x0a, 0x0d,"          (J", 0x0a, 0x0d, 0
-Libra_out db "        __", 0x0a, 0x0d,"   ___.'  '.___   Libra-  The Balance", 0x0a, 0x0d,"   ____________", 0x0a, 0x0d, 0
-Scorpius_out db "   _", 0x0a, 0x0d,"  ' `:--.--.", 0x0a, 0x0d,"     |  |  |      Scorpius-  The Scorpion", 0x0a, 0x0d,"     |  |  |", 0x0a, 0x0d,"     |  |  |  ..,", 0x0a, 0x0d,"           `---':", 0x0a, 0x0d, 0
-Sagittarius_out db "          ...", 0x0a, 0x0d,"          .':     Sagittarius-  The Archer", 0x0a, 0x0d,"        .'", 0x0a, 0x0d,"    `..'", 0x0a, 0x0d,"    .'`.", 0x0a, 0x0d, 0
-Capricorn_out db "            _", 0x0a, 0x0d,"    \      /_)    Capricorn-  The Goat", 0x0a, 0x0d,"     \    /`.", 0x0a, 0x0d,"      \  /   ;", 0x0a, 0x0d,"       \/ __.'", 0x0a, 0x0d, 0
-Aquarius_out db " .-"-._.-"-._.-   Aquarius-  The Water Bearer", 0x0a, 0x0d," .-"-._.-"-._.-", 0x0a, 0x0d, 0
-Pisces_out db "     `-.    .-'   Pisces-  The Fishes", 0x0a, 0x0d,"        :  :", 0x0a, 0x0d,"      --:--:--", 0x0a, 0x0d,"        :  :", 0x0a, 0x0d,"     .-'    `-.", 0x0a, 0x0d, 0
-
-zodiac_out db "What is your zodiac sign?", 0x0a, 0x0d,"Aries, Taurus, Gemini, Cancer, Leo, Virgo,", 0x0a, 0x0d,"Libra, Scorpius, Sagittarius, Capricorn, Aquarius, Pisces", 0x0a, 0x0d, 0
-
 
 https://ascii.co.uk/art
 Рисунки ASCII

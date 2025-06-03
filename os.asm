@@ -1,31 +1,31 @@
-org 0x7C00
+org 0x7c00
 
 jmp pre_boot
 
 pre_boot:
-    cli
-    xor ax, ax
-    mov ds, ax
-    mov es, ax
-    mov ss, ax
+    cli         ; Запрещаем прерывания
+    xor ax, ax  ; Зануляем регистры
+    mov ds, ax  ; Зануляем регистры
+    mov es, ax  ; Зануляем регистры
+    mov ss, ax  ; Зануляем регистры
     mov sp, 0x7c00
-    
-    mov ah, 0x02
-    mov al, 16   ; ������⢮ ᥪ�஢ �� �⥭��
-    mov ch, 0x00
-    mov cl, 0x02
-    mov dh, 0x00
-    mov dl, 0x80
-    mov bx, 0x7e00
-    int 0x13       ; ���뢠��� �⥭�� ᥪ��
-    jc read_error
+    ; Чтение и размещение операционной системы в ОЗУ
+    mov ah, 0x02; Функция 0x02 - Работа с жёстким диском
+    mov al, 15   ; Количество секторов на чтение.
+    mov ch, 0x00   ; Номер цилиндра
+    mov cl, 0x02   ; Номер начального сектора 2. 1 сектор - загрузчик, 2 сектор - ОС.
+    mov dh, 0x00   ; Сторона диска
+    mov dl, 0x80   ; Номер устройства. Начинается с 0x80 - 0, 0x81 - 1, ...
+    mov bx, 0x7e00 ; Адрес загрузки данных
+    int 0x13       ; Прерывание чтения сектора
+    jc read_error  ; Если возникает ошибка, переходим к выполнению куска кода read_error.
 
-    jmp 0x7e00    ; ���室 � ����㦥����� ����
+    jmp 0x7e00    ; Если ошибок не возникло, то переходим к загруженному коду. 0x7c00 + 512 = 0x7e00
 
 read_error:
-    mov ah, 0x0e
-    mov al, 'R'
-    int 0x10
+    mov ah, 0x0e ; Номер функции в прерывании 0x10, вывод символа на экран.
+    mov al, 'R'  ; Загружаем символ
+    int 0x10     ; Выводим символ
     mov al, 'E'
     int 0x10
     mov al, 'A'
@@ -47,62 +47,58 @@ read_error:
     mov al, '!'
     int 0x10
 
-    jmp $
+    jmp $        ; Бесконечный переход к этой метке. Зависаем на месте с выводом ошибки.
 
-times 510 - ($- $$) db 0
-;times 510 db 0
-dw 0xAA55
+times 510 - ($- $$) db 0 ; Заполняем оставшуюся часть кода нулями.
+dw 0xaa55 ; Магическое число в конце сектора.
 
 jmp boot
 
 boot:
-    call cls
-    call IBM_WELCOME_WINDOW
-    call cls
+    call cls                 ; Очищаем экран
+    call IBM_WELCOME_WINDOW  ; Вызываем функцию вывода логотипа IBM
+    call cls                 ; Очищаем экран
     mov si, welcome
-    call out_string
-    jmp input_loop
+    call out_string          ; Выводим приветственное сообщение
+    jmp input_loop           ; Переходим к выполнению цикла пользовательского ввода
 
 IBM_WELCOME_WINDOW:
     mov si, IBM_WELCOME
     call out_string
 
-    mov ax, 0x8600
-    mov cx, 30
-    int 0x15
+    mov ax, 0x8600  ; Время ожидания, в мс
+    mov cx, 30      ; Номер функции 30 - ожидание
+    int 0x15        ; Вызываем 0x15 прерывание для ожидания
     ret
 
 input_loop:
+
     mov si, buffer
     mov bx, 255
-    call clear_buffer
+    call clear_buffer ; Очищаем буфер от пользовательского ввода
 
-    mov si, prompt
-    call out_string
+    mov si, prompt  
+    call out_string   ; Выводим live@cd>
 
-    mov si, buffer
-    call in_string
+    mov si, buffer    
+    call in_string    ; Даём пользователю возможность ввода команды
 
-    ; Проверка на пустой ввод
-    cmp byte [buffer], 0
-    je input_loop
+    jmp OS_callback   ; Проверяем что ввёл пользователь
 
-    jmp OS_callback
-
-    jmp input_loop
+    jmp input_loop    ; Повторяем цикл
 
 OS_callback:
     mov si, help_in
     mov bx, buffer
-    call comapre_strs
+    call comapre_strs   ; Проверяем пользовательский ввод с help
     cmp cx, 1
-    je Callback_HELP
+    je Callback_HELP    ; Если пользователь ввёл help, то прыгаем в Callback_HELP
 
-    mov si, cls_in
+    mov si, cls_in      ; Проверяем пользовательский ввод с cls
     mov bx, buffer
     call comapre_strs
     cmp cx, 1
-    je Callback_CLS
+    je Callback_CLS     ; Если пользователь ввёл cls, то прыгаем в Callback_CLS
 
     mov si, info_in
     mov bx, buffer
@@ -150,50 +146,48 @@ OS_callback:
     cmp cx, 1
     je Callback_DRAW
 
-
-    jne Callback_WRONG
+    jne Callback_WRONG  ; Если ни одна команда не подошла, то сообщаем, что команда введена неправильно
     jmp input_loop
 
 Callback_HELP:
     mov si, help_out
-    call out_string
+    call out_string     ; Выводим справку по командам
     jmp input_loop
-
 Callback_CLS:
-    call cls
+    call cls            ; Вызываем функцию очистки экрана
     jmp input_loop
 
-Callback_WRONG:
+Callback_WRONG:         ; Неверная команда
     mov si, wrong_command_1
-    call out_string
-    mov si, buffer
-    call out_string
-    mov si, wrong_command_2
-    call out_string
-    jmp input_loop
+    call out_string           ; Выводим первую часть сообщения: Command '
+    mov si, buffer            ; 
+    call out_string           ; Выводим то, что ввёл пользователь
+    mov si, wrong_command_2   ; 
+    call out_string           ; Выводим выводим вторую часть сообщения: ' not found. Type 'help' to get all commands
+    jmp input_loop            ; Переходим в цикл пользовательского ввода
 
 Callback_INFO:
     mov si, info_out
-    call out_string
+    call out_string           ; Тот же алгоритм, что и help
     jmp input_loop
 
 Callback_REBOOT:
-    mov ah, 0
-    int 0x19
-    jmp $
+    mov ah, 0                 ; Номер функции 0 - "тёплая" перезагрузка
+    int 0x19                  ; Выполняем 0x19 прерывание
+    jmp $                     ; Зависаем. Можно не добавлять, на всякий случай добавил
 
 Callback_ECHO:
-    mov si, echo_out
-    call out_string
-    mov si, buffer
-    call in_string
+    mov si, echo_out          
+    call out_string           ; Выводим просьбу ввести слово, которое затем выведем 
+    mov si, buffer            
+    call in_string            ; Ожидаем пользовательский ввод
 
     mov si, buffer
-    call out_string
+    call out_string           ; Выводим введённое слово
 
-    call new_line
+    call new_line             ; Переходим на новую строку
     
-    jmp input_loop
+    jmp input_loop            ; Возвращаемся в цикл ввода
 
 Callback_FUCK:
     mov si, fuck_out
