@@ -1,6 +1,6 @@
 section .data
-kol db 80
-wiersz db 24
+kol db 40
+wiersz db 12
 kolor db 1111b
 
 section .text
@@ -118,88 +118,3 @@ F5:
     jmp petla
 Esc:     
     jmp 0000:0500h      ;возвращаемся во второй сектор
-
-DRAW_CALLBACK_OC:
-    mov si, color_Blue_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Blue
-
-    mov si, color_Green_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Green
-
-    mov si, color_Cyan_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Cyan
-
-    mov si, color_Red_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Red
-
-    mov si, color_Magenta_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Magenta
-
-    mov si, color_Light_Gray_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Gray
-
-    mov si, color_Dark_Gray_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Dark_Gray
-
-    mov si, color_Light_Blue_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Blue
-
-    mov si, color_Light_Green_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Green
-
-    mov si, color_Light_Cyan_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Cyan
-
-    mov si, color_Light_Red_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Red
-
-    mov si, color_Light_Magenta_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Light_Magenta
-
-    mov si, color_Brown_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Brown
-
-    mov si, color_Yellow_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_color_Yellow

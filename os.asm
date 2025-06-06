@@ -130,7 +130,89 @@ OS_callback:
     cmp cx, 1
     je Callback_BACKGROUND
 
-    call DRAW_CALLBACK_OC
+    mov si, color_Blue_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Blue
+
+    mov si, color_Green_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Green
+
+    mov si, color_Cyan_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Cyan
+
+    mov si, color_Red_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Red
+
+    mov si, color_Magenta_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Magenta
+
+    mov si, color_Light_Gray_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Gray
+
+    mov si, color_Dark_Gray_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Dark_Gray
+
+    mov si, color_Light_Blue_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Blue
+
+    mov si, color_Light_Green_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Green
+
+    mov si, color_Light_Cyan_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Cyan
+
+    mov si, color_Light_Red_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Red
+
+    mov si, color_Light_Magenta_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Light_Magenta
+
+    mov si, color_Brown_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Brown
+
+    mov si, color_Yellow_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_color_Yellow
 
     mov si, zodiac_in
     mov bx, buffer
@@ -138,7 +220,77 @@ OS_callback:
     cmp cx, 1
     je Callback_ZODIAC
 
-    call ZODIAC_CALLBACK_OS
+    mov si, Aries_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Aries
+
+    mov si, Taurus_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Taurus
+
+    mov si, Gemini_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Gemini
+
+    mov si, Cancer_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Cancer
+
+    mov si, Leo_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Leo
+
+    mov si, Virgo_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Virgo
+
+    mov si, Libra_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Libra
+
+    mov si, Scorpius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Scorpius
+
+    mov si, Sagittarius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Sagittarius
+
+    mov si, Capricorn_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Capricorn
+
+    mov si, Aquarius_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Aquarius
+
+    mov si, Pisces_in
+    mov bx, buffer
+    call comapre_strs
+    cmp cx, 1
+    je Callback_Pisces
 
     mov si, draw_in
     mov bx, buffer
@@ -209,6 +361,7 @@ Callback_DRAW:
     mov si, draw_out
     call out_string
     call kursor
+    ;call _start
     call cls
     call out_string
     jmp input_loop
