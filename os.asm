@@ -74,7 +74,7 @@ IBM_WELCOME_WINDOW:
 input_loop:
 
     mov si, buffer
-    mov bx, 255
+    mov bx, 512 ;256
     call clear_buffer ; Очищаем буфер от пользовательского ввода
 
     mov si, prompt  
