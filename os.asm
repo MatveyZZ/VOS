@@ -297,12 +297,6 @@ OS_callback:
     call comapre_strs
     cmp cx, 1
     je Callback_DRAW
-    
-    mov si, time_in
-    mov bx, buffer
-    call comapre_strs
-    cmp cx, 1
-    je Callback_TIME
 
     jne Callback_WRONG  ; Если ни одна команда не подошла, то сообщаем, что команда введена неправильно
     jmp input_loop
@@ -372,19 +366,10 @@ Callback_DRAW:
     call out_string
     jmp input_loop
 
-Callback_TIME:
-    ; mov si, date_msg
-    ; call out_string
-    ; mov si, time_msg
-    call _main
-    call out_string
-    jmp input_loop
-
 %include "io.asm"
 %include "color.asm"
 %include "zodiac.asm"
 %include "draw.asm"
-%include "time-data.asm"
 
 ;welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
 welcome db "Welcome to FuckingOS!", 0x0a, 0x0d, "P.S. -I fucked in my mouth doing this OS:(", 0x0a, 0x0d, "Type 'help' to get fucking command list!", 0x0a, 0x0d, 0
@@ -403,7 +388,6 @@ fuck_in db "fuck", 0
 background_in db "color", 0
 zodiac_in db "zodiac", 0
 draw_in db "draw", 0
-time_in db "time", 0
 
 ; info_out db "FuckingOS x16 (Terminal Operation System 16-bit) v.0.0:", 0x0a, 0x0d, "        It's an operating system under development, fuck, I'm already fucking sick of it..", 0x0a, 0x0d, "         Author: Fucking Matvey.", 0x0a, 0x0d, "          Made in Holy Russia!", 0x0a, 0x0d, 0
 ; help_out db "          cls - Clear screen", 0x0a, 0x0d, "         info - Get system info", 0x0a, 0x0d, "        reboot - Reboot computer", 0x0a, 0x0d, "       echo - Write text in screen", 0x0a, 0x0d, "       fuck - Fuck you", 0x0a, 0x0d, 0
