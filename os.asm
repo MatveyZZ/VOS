@@ -372,7 +372,7 @@ Callback_DRAW:
     jmp input_loop
 
 Callback_CALC:
-    call _start
+    call calc
     call out_string
     jmp input_loop
 

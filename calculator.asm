@@ -12,9 +12,9 @@ section .bss
     input resb 10
 
 section .text
-    global _start
+    global calc
 
-_start:
+calc:
     ; Запрос первого числа
     mov ah, 09h
     lea dx, [prompt1]
